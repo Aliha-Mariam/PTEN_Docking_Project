@@ -33,18 +33,18 @@ In this project, a comprehensive bioinformatics pipeline was developed to study 
 
 | Tool | Description | Purpose in This Project |
 |--------|-------------|-------------------------|
-| Biopython | An open-source Python library for computational molecular biology and bioinformatics. It provides modules for sequence analysis, database access, BLAST searches, and structural biology. | Used for retrieving PTEN sequences from NCBI, reading FASTA and GenBank files, transcription, translation, BLAST analysis, and protein structure manipulation. |
-| NCBI Entrez | A programmatic interface provided by the National Center for Biotechnology Information (NCBI) for accessing biological databases. | Used to retrieve PTEN nucleotide and protein sequences directly from NCBI databases. |
-| BLAST (Basic Local Alignment Search Tool) | A sequence similarity search algorithm used to compare nucleotide or protein sequences against large biological databases. | Used to validate PTEN mRNA and protein sequences by identifying similar sequences and confirming sequence identity. |
-| RCSB Protein Data Bank (PDB) | The world's largest repository of experimentally determined three-dimensional protein structures obtained through X-ray crystallography, NMR spectroscopy, and cryo-EM. | Used to download the experimentally determined PTEN structure (PDB ID: 1D5R) for structural analysis and molecular docking. |
-| AlphaFold Protein Structure Database | A database of highly accurate protein structure predictions generated using DeepMind's AlphaFold artificial intelligence system. | Used to obtain the predicted PTEN structure for comparison with the experimental structure and structural validation. |
-| Open Babel | A chemical informatics toolkit that converts molecular structures between different file formats and generates 3D molecular coordinates. | Used to convert the SF1670 ligand from SDF format into PDB and PDBQT formats required for docking simulations. |
-| GNINA | A deep learning-enhanced molecular docking software built upon AutoDock Vina. It combines traditional docking algorithms with convolutional neural network (CNN) scoring functions. | Used to predict the binding orientation, binding affinity, and interaction of SF1670 with the PTEN protein active site. |
-| Py3Dmol | A Python wrapper for 3Dmol.js that enables interactive visualization of molecular structures directly within Jupyter notebooks and Google Colab. | Used to visualize PTEN structures, AlphaFold models, structural superimposition results, and PTEN–SF1670 docking complexes. |
-| NumPy | A scientific computing library for Python that provides efficient numerical operations and multidimensional array handling. | Used for coordinate calculations, active-site center determination, and structural data processing. |
-| Pandas | A data analysis and manipulation library for Python that provides DataFrame structures for organizing tabular data. | Used to create BLAST result tables, docking score tables, and organize computational results. |
-| Matplotlib | A data visualization library for Python used to generate scientific plots and graphs. | Used to generate pLDDT confidence plots and docking affinity score visualizations. |
-| PubChem | A public chemical database maintained by the National Institutes of Health (NIH) that provides information about chemical compounds, structures, and biological activities. | Used to retrieve the PTEN inhibitor SF1670 (PubChem CID: 6442177) for ligand preparation and docking studies. |
+| Biopython | An open-source Python library for molecular biology and bioinformatics, supporting sequence analysis and structural biology tools. | Used for retrieving PTEN sequences, FASTA/GenBank handling, transcription, translation, BLAST analysis, and structure processing. |
+| NCBI Entrez | A programmatic interface to access NCBI biological databases for retrieving sequence and genomic data. | Used to fetch PTEN nucleotide and protein sequences directly from NCBI databases. |
+| BLAST (Basic Local Alignment Search Tool) | A sequence comparison algorithm used to find regions of similarity between biological sequences. | Used to validate PTEN mRNA and protein sequences by comparing them with known database sequences. |
+| RCSB Protein Data Bank (PDB) | A global database of experimentally determined 3D protein structures using X-ray, NMR, and cryo-EM methods. | Used to download PTEN experimental structure (1D5R) for structural analysis and docking. |
+| AlphaFold Protein Structure Database | An AI-based database providing highly accurate predicted protein structures using DeepMind’s AlphaFold system. | Used to obtain predicted PTEN structure for comparison with experimental structure. |
+| Open Babel | A chemical informatics tool for converting molecular formats and generating 3D chemical structures. | Used to convert SF1670 ligand from SDF into PDB and PDBQT formats for docking. |
+| GNINA | A deep learning-based molecular docking tool built on AutoDock Vina with CNN scoring. | Used to predict binding poses and affinities of SF1670 with PTEN protein. |
+| Py3Dmol | A Python visualization library for interactive 3D molecular structure display in notebooks. | Used to visualize PTEN structures and ligand–protein docking complexes. |
+| NumPy | A numerical computing library for handling arrays and performing mathematical operations. | Used for coordinate calculations and active-site center determination. |
+| Pandas | A data manipulation library for organizing and analyzing tabular datasets. | Used to create BLAST tables and docking result tables. |
+| Matplotlib | A plotting library for creating scientific graphs and visual data representation. | Used for pLDDT plots and docking affinity visualization. |
+| PubChem | A public chemical database containing information on chemical compounds and bioactivity data. | Used to retrieve SF1670 ligand (CID: 6442177) for docking studies. |
 ---
 
 ## Dataset Information
@@ -242,6 +242,9 @@ Several important alignment statistics are extracted:
 
 These values are stored in a list and later converted into a Pandas DataFrame, creating a clean and readable results table.
 
+<img width="737" height="206" alt="blastn" src="https://github.com/user-attachments/assets/19ee030f-418b-4f5e-aee5-37fc12eb2b20" />
+
+
 
 ---
 
@@ -284,6 +287,8 @@ After translating the PTEN mRNA sequence into a protein sequence, the resulting 
 First, the official PTEN protein sequence (Accession: **NP_000305.3**) was downloaded from the NCBI Protein database using Entrez. The translated protein generated from the mRNA sequence was then compared directly with the official PTEN protein sequence. Matching sequence lengths and identical amino acid sequences confirmed that the translation process was accurate and produced the correct PTEN protein.
 
 To further verify the biological identity of the protein, a **BLASTP** search was performed against the NCBI non-redundant protein database (**nr**). BLASTP compares protein sequences and identifies similar proteins across different organisms. The top five hits were extracted and summarized in a table containing alignment length, percentage identity, and E-values.
+
+<img width="711" height="200" alt="blastp" src="https://github.com/user-attachments/assets/ed7986f4-96cd-4065-99e0-d9447c0b1a1c" />
 
 
 ---
@@ -502,6 +507,9 @@ display(HTML("<hr><br>"))
 
 In this step, the cleaned experimental PTEN protein structure is visualized using the Py3Dmol library. The file `PTEN_cleanprotein.pdb`, which was generated after removing water molecules and non-protein components, is loaded and rendered in an interactive 3D format. The structure is displayed in cartoon representation, which is commonly used in structural biology to clearly show the overall folding pattern of proteins, including helices, sheets, and loop regions.The color scheme “spectrum” is applied so that different regions of the protein are visually distinguished, making it easier to interpret structural organization. The function `zoomTo()` automatically adjusts the view so that the entire protein fits within the display window. This step helps in visually confirming that the receptor protein is correctly prepared and structurally intact before proceeding to docking analysis. 
 
+<img width="855" height="478" alt="exp strcuture" src="https://github.com/user-attachments/assets/a98f73a7-cbd0-4f20-b2e4-50e6cc2de95f" />
+
+
 ---
 
 ## 12. Visualization of AlphaFold Predicted PTEN Structure
@@ -527,6 +535,9 @@ display(HTML("<hr><br>"))
 ```
 
 In this step, the computationally predicted PTEN structure obtained from the AlphaFold database is visualized using Py3Dmol. The file `PTEN_alphafold.pdb` contains the three-dimensional coordinates of the PTEN protein predicted by AlphaFold based on its amino acid sequence.The structure is displayed in a cartoon representation, which helps in clearly visualizing the secondary structural elements such as alpha helices, beta sheets, and loop regions. The spectrum color scheme is applied to differentiate different regions of the protein and make the structure more interpretable.This visualization allows comparison of the predicted PTEN structure with the experimentally determined structure, helping to assess structural similarity and confidence in the prediction. The view is automatically centered and scaled using `zoomTo()` so that the entire protein is visible in a single frame.
+
+<img width="865" height="475" alt="alpha structure" src="https://github.com/user-attachments/assets/dc7ab2f7-4bcc-4ac7-adca-1e30b669f00f" />
+
 
 ---
 
@@ -611,6 +622,9 @@ The Superimposer algorithm calculated an RMSD (Root Mean Square Deviation) value
 
 Finally, both structures were visually superimposed, with the experimental structure shown in red and the AlphaFold structure shown in blue. This allows clear visual confirmation of structural similarity and minor deviations between the two models.
 
+<img width="687" height="471" alt="Superimpose" src="https://github.com/user-attachments/assets/0b6ef346-77d7-490a-98f6-f88d4932dbcb" />
+
+
 
 ---
 
@@ -660,6 +674,8 @@ print("Residues < 50:", low_confidence)
 ```
 
 ### Results
+
+<img width="892" height="287" alt="plddt" src="https://github.com/user-attachments/assets/c248f46b-1a12-4736-a98f-cb44aeceef3c" />
 
 - Number of residues: **403**
 - Average pLDDT: **83.03**
@@ -768,7 +784,7 @@ The code selects amino acid residues that are commonly involved in protein–lig
 - Glycine (GLY)
 These residues are often found in or near functional binding sites due to their chemical properties such as charge, flexibility, and ability to form hydrogen bonds. After selecting these residues from the cleaned PTEN protein structure, the coordinates of all their atoms are collected. The mean (average) position of these coordinates is then calculated using NumPy. This average point represents the estimated center of the binding pocket.
 
-## Final Docking Center
+### Final Docking Center
 
 The computed active site center for docking is:
 - **X = 35.06179**
@@ -890,8 +906,8 @@ The table helps in clearly comparing how different ligand conformations interact
 
 After creating the table, a bar plot is generated using Matplotlib to visually represent the docking results. The x-axis represents different docking poses, while the y-axis represents binding affinity values. The y-axis is inverted so that stronger (more negative) binding affinities appear higher in the graph, making interpretation more intuitive.
 
+<img width="406" height="292" alt="plot" src="https://github.com/user-attachments/assets/9b8421e8-4a7c-46c4-b90d-e37c7bc9c45c" />
 
-## Key Insight
 
 The graph clearly shows that **Pose 1 has the strongest binding affinity (-10.47 kcal/mol)** among all generated poses, indicating it is the most favorable docking conformation of SF1670 with PTEN.
 
@@ -925,6 +941,7 @@ In this step, the final docked complex of PTEN protein with the SF1670 ligand is
 First, the cleaned PTEN protein structure is loaded from the PDB file, and the best docking pose of the ligand (SF1670) is also loaded from the GNINA output. These two structures represent the receptor (protein) and ligand (drug molecule) after docking.
 The protein is displayed in a **cartoon representation** with a spectrum color scheme, which helps in clearly visualizing the overall protein structure and secondary structural elements such as helices and sheets.The ligand is displayed in a **stick representation** with green coloring, which highlights its position and orientation inside the protein binding pocket.Finally, both structures are shown together in a single interactive 3D view, allowing clear visualization of how SF1670 binds within the PTEN active site.
 
+<img width="640" height="394" alt="docked complex" src="https://github.com/user-attachments/assets/5427bc6f-b1d8-4a9e-9b3f-101f5bf99939" />
 
 
 This visualization confirms the docking result by showing the physical binding location of SF1670 within the PTEN protein, supporting the predicted binding affinity and docking analysis.
